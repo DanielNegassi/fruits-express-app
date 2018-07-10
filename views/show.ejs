@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <h1>Fruits Show Pages</h1>
+  <h3>Fruit Name: <%= fruit.name %></h3>
+  <h4>Fruit Color: <%= fruit.color %></h4>
+  <% if(fruit.readyToEat === true) { %>
+    <span>It is ready to eat</span>
+    <% } else {%>
+      <span>It is not ready to eat</span>
+      <% } %>
+
+</body>
+
+</html>

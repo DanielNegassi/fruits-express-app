@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>We are the Party Potensh Peeps</h1>
+      <h2>Peeps Name: <%= partyPotensh.name %></h2>
+      <h2>Peeps Spirit Animal: <%= partyPotensh.spiritAnimal %></h2>
+      <% if(partyPotensh.readyToParty === true) { %>
+        <span> They are ready to party</span>
+      <% } else { %>
+      <span> They are not ready to party </span>
+    <% } %>
+  </body>
+</html>
