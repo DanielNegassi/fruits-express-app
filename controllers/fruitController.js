@@ -6,7 +6,7 @@ const router = express.Router();
 const Fruits = require('../models/fruits');
 //two dots needed to get to the same level as model. ie 1 dot to go to controllers folder and another to go to fruits-express.
 
-// Creating the index route
+/////////////////////////// Creating the index route///////////////////////////
 // index route should show all the fruits
 router.get('/', (req, res) => {
   res.render('index.ejs', {
@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
   })
 });
 
+//////////////////////////////////New(post)////////////////////////////////////
 router.post('/', (req, res) => {
   // contents of the form will be in req.body
   console.log(req.body, 'this is req.body, should be form info')
