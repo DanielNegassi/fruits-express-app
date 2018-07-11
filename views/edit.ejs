@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <h1>Edit Fruit Page</h1>
+  <form method="POST" action="/fruits/<%=index%>?_method=PUT">
+      Name: <input type="text" name="name" value="<%=fruit.name%>">
+      <!-- name="name" is important b.c it'll give you something to access through req.body  -->
+      Color: <input type="text" name="color" value="<%=fruit.color%>">
+      Is Ready to Eat:
+      <input type="checkbox" name="readyToEat"
+
+      <% if(fruit.readyToEat === true){ %>
+        checked
+      <% } %>
+      >
+      <br/>
+      <input type="submit" value="Submit Changes">
+    </form>
+      <!-- without the checked attribute you can't check the checkbox. -->
+</body>
+</html>
