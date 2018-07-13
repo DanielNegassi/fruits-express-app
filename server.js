@@ -3,6 +3,9 @@ const app     = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
+// require our db
+require('./db/db');
+
 // initialized some middleware
 //bodyparser allows us to read the
 //content of a form, or the body of a request
@@ -16,8 +19,6 @@ const fruitController = require('./controllers/fruitController');
 // This means every route in the fruitController
 // now starts with /fruits
 app.use('/fruits', fruitController);
-
-
 
 
 

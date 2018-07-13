@@ -1,20 +1,11 @@
-const fruits = [
-    {
-        name:'apple',
-        color: 'red',
-        readyToEat: true
-    },
-    {
-        name:'pear',
-        color: 'green',
-        readyToEat: false
-    },
-    {
-        name:'banana',
-        color: 'yellow',
-        readyToEat: true
-    }
-];
+const mongoose = require('mongoose');
+
+const fruitSchema = new mongoose.Schema({
+  name: String,
+  color: String,
+  readyToEat: Boolean
+});
 //Exporting the whole fruits array
 // and
-module.exports = fruits;
+module.exports = mongoose.model('fruit', fruitSchema);
+// we are saying that we want to use the model fruit and we want it to look like the schema.

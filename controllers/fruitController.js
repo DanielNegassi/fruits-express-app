@@ -9,10 +9,19 @@ const Fruits = require('../models/fruits');
 /////////////////////////// Creating the index route///////////////////////////
 // index route should show all the fruits
 router.get('/', (req, res) => {
-  res.render('index.ejs', {
-    fruits:Fruits
-  })
-});
+
+Fruits.find({}, (err, allFruits) => {
+  if (err) {
+    res.send(err);
+  } else {
+    //allFruits is the response from our db and when you are finding all of something it returns an array
+    res.render('index.ejs', {
+      fruits: allFruits
+    })
+  }
+})
+})
+
 
 //////////////////////////////////New(post)////////////////////////////////////
 router.post('/', (req, res) => {
@@ -28,11 +37,19 @@ router.post('/', (req, res) => {
     req.body.readyToEat = false;
   }
   //adding the contents of the form to the model
-  Fruits.push(req.body);
+  Fruits.create(req.body, (err, createdFruit) => {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log(createdFruit)
 
-  res.redirect('/fruits');
-  res.send('Post worked');
-});
+      // we want to respond to the client after we get the response from the database. hence we will put our res.redirect /fruits inside this function
+      // this will redirect the response back to get /fruits route
+
+      res.redirect('/fruits');
+    }
+  })
+  });
 
 //create our new route
 router.get('/new', (req, res) => {
@@ -49,47 +66,64 @@ router.get('/new', (req, res) => {
 // The Show route --> This route always show's one item
 // from the model
 
-//Edit Route - to display a single fruit and have the ability to edit it
+/////////////////////////////Edit Route ///////////////////////////////////////
+//- to display a single fruit and have the ability to edit it
 
-router.get('/:index/edit', (req, res) => {
+router.get('/:id/edit', (req, res) => {
 
-res.render('edit.ejs', {
-  fruit: Fruits[req.params.index],
-  index: req.params.index
-  //we pass index here because we want to know which item we are updating. Most of the time it will be a database id but now it will be our index number
+  Fruits.findById(req.params.id,(err, foundFruit) => {
+    res.render('edit.ejs', {
+      fruit: foundFruit,
+      index: req.params.index
+      //we pass index here because we want to know which item we are updating. Most of the time it will be a database id but now it will be our index number
+  })
 });
-
 })
 
-
-
-//show route
-router.get('/:index', (req, res) => {
+//////////////////////////////////show route///////////////////////////////////
+router.get('/:id', (req, res) => {
+  Fruits.findById(req.params.id, (err, foundfruit) => {
+    console.log(foundfruit,'this is the fruit to show');
+    if (err) {
+      res.send(err);
+    } else {
 
   // Render is when you want to send
   //an ejs template to the client
  res.render('show.ejs', {
-   fruit: Fruits[req.params.index]// This creates a 'fruits' variable in the show page
+   fruit: foundfruit
  })
+ }
+})
 });
-
-router.put('/:index', (req, res) => {
+router.put('/:id', (req, res) => {
   if(req.body.readyToEat === 'on'){ // if checked then req.body.readyToEat = 'on'
   req.body.readyToEat = true;
 } else {
   req.body.readyToEat = false;
 }
 // req.body is the updated from info
-Fruits[req.params.index] = req.body;
-res.redirect('/fruits');
+Fruits.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedFruit) => {
+if(err){
+  res.send(err);
+}else{
+  console.log(updatedFruit, 'check out model');
+res.redirect('/fruits')};
+})
 });
 
-//delete route
-router.delete('/:index', (req, res) => {
-  Fruits.splice(req.params.index, 1);
-  console.log(req.params.index, ' this is req.params')
-  res.redirect('/fruits')
+/////////////////////////////////////delete route///////////////////////////////
+router.delete('/:id', (req, res) => {
+  console.log(req.params.id,'this is params in delete');
+  Fruits.findByIdAndRemove(req.params.id, (err, deletedFruit) => {
+  if(err){
+  console.log(err, 'this is err in delete')
+    res.send(err);
+  } else {
+  console.log(deletedFruit, ' this is deletedfruit in the delete route');
+  res.redirect('/fruits')};
 })
+});
 
 
   // console.log(req.params, '<-- this is req.params')

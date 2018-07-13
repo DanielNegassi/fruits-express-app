@@ -8,7 +8,7 @@
 
 <body>
   <h1>Edit Fruit Page</h1>
-  <form method="POST" action="/fruits/<%=index%>?_method=PUT">
+  <form method="POST" action="/fruits/<%=fruit.id%>?_method=PUT">
       Name: <input type="text" name="name" value="<%=fruit.name%>">
       <!-- name="name" is important b.c it'll give you something to access through req.body  -->
       Color: <input type="text" name="color" value="<%=fruit.color%>">
